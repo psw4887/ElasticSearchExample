@@ -21,6 +21,7 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     @Value("${elasticsearch.port}")
     private Integer port;
 
+    // TODO 4: 상속받은 AbstractElasticsearchConfiguration 의 RestHighLevelClient 생성 구현하기
     @Override
     public RestHighLevelClient elasticsearchClient() {
         ClientConfiguration clientConfiguration = ClientConfiguration.builder()

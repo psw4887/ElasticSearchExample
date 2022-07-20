@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
-// TODO 5: ElasticSearch Server 요청을 위한 RestTemplate 빈 등록 및 서버 IP 설정
+// TODO 6: ElasticSearch Server 요청을 위한 RestTemplate 빈 등록 및 서버 IP 설정
 @Configuration
 public class WebConfig {
 
