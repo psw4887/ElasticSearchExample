@@ -1,6 +1,6 @@
 package com.copark.elasticsearchexample.controller;
 
-import com.copark.elasticsearchexample.entity.jpa.Student;
+import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.service.AcademyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ public class TestController {
 
     // TODO 7: 응답 객체를 반환하는 Rest Controller 작성
     @GetMapping("/students")
-    public ResponseEntity<List<Student>> retrieveStudents() {
+    public ResponseEntity<List<ElasticStudent>> retrieveStudents() {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .location(URI.create("/elastic/students"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .build();
+                .body(academyService.retrieveStudents());
     }
 
 }
