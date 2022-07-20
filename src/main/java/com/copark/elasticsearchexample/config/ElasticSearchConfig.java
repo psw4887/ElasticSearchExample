@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 // TODO 3: ElasticSearch Configuration 설정 및 Repository 위치 설정
-@EnableElasticsearchRepositories(basePackages = { "com.copark.elasticsearchexample.repository.elastic" })
+@EnableElasticsearchRepositories(basePackages = { "com.copark.elasticsearchexample.elasticrepository" })
 @Configuration
 @Slf4j
 public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {

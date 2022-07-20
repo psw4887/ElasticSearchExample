@@ -19,6 +19,7 @@ public class TestController {
     // TODO 7: 응답 객체를 반환하는 Rest Controller 작성
     public ResponseEntity<List<Student>> retrieveStudents() {
 
+        return null;
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 // TODO 5: ElasticSearch Repository 와 충돌 회피를 위한 Jpa Repository 패키지 위치 설정
 @SpringBootApplication
-@EnableJpaRepositories("com.copark.elasticsearchexample.repository.jpa")
+@EnableJpaRepositories("com.copark.elasticsearchexample.repository")
 public class ElasticSearchExampleApplication {
 
     public static void main(String[] args) {

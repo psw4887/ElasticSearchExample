@@ -1,4 +1,4 @@
-package com.copark.elasticsearchexample.repository.jpa;
+package com.copark.elasticsearchexample.repository;
 
 import com.copark.elasticsearchexample.entity.jpa.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
