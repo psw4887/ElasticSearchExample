@@ -1,6 +1,8 @@
 package com.copark.elasticsearchexample.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +26,7 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     // TODO 4: 상속받은 AbstractElasticsearchConfiguration 의 RestHighLevelClient 생성 구현하기
     @Override
     public RestHighLevelClient elasticsearchClient() {
-        ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                                                                     .connectedTo(hostname + ":" + port)
-                                                                     .build();
-
-        return RestClients.create(clientConfiguration).rest();
+        return new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "http")));
     }
 
 }
