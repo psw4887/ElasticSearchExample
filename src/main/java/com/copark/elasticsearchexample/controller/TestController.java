@@ -1,33 +1,56 @@
 package com.copark.elasticsearchexample.controller;
 
+import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.service.AcademyService;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
-import java.util.List;
-
 @RestController
-@RequestMapping("/elastic")
+@RequestMapping("/elastic/students")
 @RequiredArgsConstructor
 public class TestController {
 
     private final AcademyService academyService;
 
-    // TODO 7: 응답 객체를 반환하는 Rest Controller 작성
-    @GetMapping("/students")
-    public ResponseEntity<List<ElasticStudent>> retrieveStudents() {
+    private static final String DEFAULT_ELASTIC = "/elastic/students";
 
+    // TODO 10: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
+    @PutMapping("/create")
+    public ResponseEntity<StudentRequest> createStudent(@RequestBody StudentRequest studentRequest) {
+        academyService.createStudent(studentRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .location(URI.create("PUT" + DEFAULT_ELASTIC + "/create"))
+                             .contentType(MediaType.APPLICATION_JSON)
+                             .body(studentRequest);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ElasticStudent>> retrieveStudents() {
         return ResponseEntity.status(HttpStatus.OK)
-                .location(URI.create("/elastic/students"))
+                             .location(URI.create("GET" + DEFAULT_ELASTIC))
+                             .contentType(MediaType.APPLICATION_JSON)
+                             .body(academyService.retrieveStudents());
+    }
+
+    // TODO 12: Info 에 Keyword 를 포함하는 학생 목록을 응답 객체를 반환하는 Rest Controller 작성
+    @GetMapping("/info/search")
+    public ResponseEntity<List<ElasticStudent>> retrieveStudentsInfoContainKeyword(@RequestParam String keyword) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .location(URI.create("GET" + DEFAULT_ELASTIC + "/info/search"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(academyService.retrieveStudents());
+                .body(academyService.retrieveStudentsInfoContainKeyword(keyword));
     }
 
 }

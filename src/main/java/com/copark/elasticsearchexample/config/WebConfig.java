@@ -20,7 +20,7 @@ public class WebConfig {
     }
 
     @Bean
-    public String ElasticIp(@Value("${elasticsearch.url}") String ip) {
+    public String elasticIp(@Value("${elasticsearch.url}") String ip) {
         return ip;
     }
 
