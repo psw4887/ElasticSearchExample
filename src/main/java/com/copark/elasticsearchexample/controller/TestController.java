@@ -40,6 +40,7 @@ public class TestController {
                              .body(studentRequest);
     }
 
+    // TODO 16: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
     @GetMapping
     public ResponseEntity<List<ElasticStudent>> retrieveStudents() throws JsonProcessingException,
             ParseException {

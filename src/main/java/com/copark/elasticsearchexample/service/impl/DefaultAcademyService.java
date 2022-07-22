@@ -4,8 +4,8 @@ import com.copark.elasticsearchexample.adapter.AcademyAdapter;
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.elasticrepository.ElasticStudentRepository;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
-import com.copark.elasticsearchexample.entity.jpa.Student;
 import com.copark.elasticsearchexample.service.AcademyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +35,16 @@ public class DefaultAcademyService implements AcademyService {
         elasticRepository.save(new ElasticStudent(studentRequest));
     }
 
+    // TODO 15: 직접 ElasticSearch Server 에 요청을 보낸 후 받은 데이터를 파싱하는 서비스 생성
     @Override
-    public List<ElasticStudent> retrieveStudents() throws ParseException {
+    public List<ElasticStudent> retrieveStudents() throws ParseException, JsonProcessingException {
         List<ElasticStudent> list = new ArrayList<>();
-        String response = academyAdapter.searchTest();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
-        JSONObject hits = (JSONObject) jsonObject.get("hits");
-        JSONArray hitBody = (JSONArray) hits.get("hits");
-        for (Object o : hitBody) {
-            JSONObject source = (JSONObject) o;
+        JSONArray hitBody = getHitBody(academyAdapter.searchTest());
+
+        for (Object data : hitBody) {
+            JSONObject source = (JSONObject) data;
             JSONObject body = (JSONObject) source.get("_source");
-            list.add(new ElasticStudent(
-                    new StudentRequest(body.get("id").toString(), body.get("name").toString(),
-                                       body.get("info").toString())));
+            list.add(new ElasticStudent(objectMapper.readValue(body.toJSONString(), StudentRequest.class)));
         }
 
         return list;
@@ -56,6 +52,7 @@ public class DefaultAcademyService implements AcademyService {
 
     @Override
     public List<ElasticStudent> retrieveStudentsInfoContainKeyword(String keyword) {
+
         return elasticRepository.findAllByInfoContaining(keyword);
     }
 
@@ -66,6 +63,14 @@ public class DefaultAcademyService implements AcademyService {
                 elasticRepository.findById(studentId).orElseThrow(RuntimeException::new);
         elasticRepository.delete(elasticStudent);
     }
+
+    private JSONArray getHitBody(String response) throws ParseException {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
+        JSONObject hits = (JSONObject) jsonObject.get("hits");
+        return (JSONArray) hits.get("hits");
+    }
+
 }
 
 
