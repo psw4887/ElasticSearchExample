@@ -29,7 +29,7 @@ public class TestController {
 
     private static final String DEFAULT_ELASTIC = "/elastic/students";
 
-    // TODO 10: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
+    // TODO 9: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
     @PutMapping("/create")
     public ResponseEntity<StudentRequest> createStudent(@RequestBody StudentRequest studentRequest) {
         academyService.createStudent(studentRequest);
@@ -40,7 +40,7 @@ public class TestController {
                              .body(studentRequest);
     }
 
-    // TODO 16: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
+    // TODO 14: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
     @GetMapping
     public ResponseEntity<List<ElasticStudent>> retrieveStudents() throws JsonProcessingException,
             ParseException {
@@ -50,7 +50,7 @@ public class TestController {
                              .body(academyService.retrieveStudents());
     }
 
-    // TODO 12: Info 에 Keyword 를 포함하는 학생 목록을 응답 객체를 반환하는 Rest Controller 작성
+    // TODO 10: Info 에 Keyword 를 포함하는 학생 목록을 응답 객체를 반환하는 Rest Controller 작성
     @GetMapping("/info/search")
     public ResponseEntity<List<ElasticStudent>> retrieveStudentsInfoContainKeyword(@RequestParam String keyword) {
         return ResponseEntity.status(HttpStatus.OK)

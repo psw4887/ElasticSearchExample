@@ -1,5 +1,6 @@
 package com.copark.elasticsearchexample.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.copark.elasticsearchexample.adapter.AcademyAdapter;
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.elasticrepository.ElasticStudentRepository;
@@ -18,7 +19,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-// TODO 9: ElasticRepository 과 요청할 RestTemplate 를 받는 Service 구현
+// TODO 8: ElasticRepository 과 요청할 RestTemplate 를 받는 Service 구현
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,7 +36,7 @@ public class DefaultAcademyService implements AcademyService {
         elasticRepository.save(new ElasticStudent(studentRequest));
     }
 
-    // TODO 15: 직접 ElasticSearch Server 에 요청을 보낸 후 받은 데이터를 파싱하는 서비스 생성
+    // TODO 13: 직접 ElasticSearch Server 에 요청을 보낸 후 받은 데이터를 파싱하는 서비스 생성
     @Override
     public List<ElasticStudent> retrieveStudents() throws ParseException, JsonProcessingException {
         List<ElasticStudent> list = new ArrayList<>();

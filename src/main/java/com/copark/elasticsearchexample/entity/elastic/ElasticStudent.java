@@ -1,6 +1,6 @@
 package com.copark.elasticsearchexample.entity.elastic;
 
-// TODO 7: ElasticSearch Server 에 담을 객체 생성
+// TODO 6: ElasticSearch Server 에 담을 객체 생성
 
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import javax.persistence.Column;

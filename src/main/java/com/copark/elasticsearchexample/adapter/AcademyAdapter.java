@@ -20,7 +20,7 @@ public class AcademyAdapter {
     private final String elasticIp;
     private static final String DEFAULT_STUDENT = "/students/_doc";
 
-    // TODO 14: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
+    // TODO 12: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
     public String searchTest() {
         HttpEntity<String> requestEntity = new HttpEntity<>(this.buildHeaders());
         ResponseEntity<String> response =
