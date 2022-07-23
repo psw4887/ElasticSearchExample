@@ -5,14 +5,10 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 // TODO 7: ElasticSearchRepository 를 상속받는 ElasticRepository 생성
 public interface ElasticStudentRepository extends ElasticsearchRepository<ElasticStudent, String> {
-
-    @Query("{\"match\": {\"info\": {\"query\": \"?0\"}}}")
-    List<ElasticStudent> findAllStudents(String info);
 
     // TODO 16: Pageable 을 구현한 검색 가능
     Page<ElasticStudent> searchElasticStudentByInfo(String keyword, Pageable pageable);
