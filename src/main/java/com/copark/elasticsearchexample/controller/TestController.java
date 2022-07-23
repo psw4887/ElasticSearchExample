@@ -58,6 +58,14 @@ public class TestController {
                 .body(academyService.retrieveStudentsInfoContainKeyword(keyword));
     }
 
+    @GetMapping("/info/match")
+    public ResponseEntity<List<ElasticStudent>> namingMethodTest(@RequestParam String info) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .location(URI.create("GET" + DEFAULT_ELASTIC + "/info/match"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(academyService.namingMethodTest(info));
+    }
+
     @DeleteMapping("/{studentId}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable String studentId) {
         academyService.deleteStudent(studentId);

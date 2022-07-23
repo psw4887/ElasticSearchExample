@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,11 @@ public class DefaultAcademyService implements AcademyService {
     public List<ElasticStudent> retrieveStudentsInfoContainKeyword(String keyword) {
 
         return elasticRepository.findAllByInfoContaining(keyword);
+    }
+
+    @Override
+    public List<ElasticStudent> namingMethodTest(String keyword) {
+        return elasticRepository.searchElasticStudentByInfo(keyword, PageRequest.of(1, 2)).getContent();
     }
 
     @Transactional

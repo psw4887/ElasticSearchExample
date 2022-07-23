@@ -3,6 +3,8 @@ package com.copark.elasticsearchexample.elasticrepository;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
@@ -11,6 +13,9 @@ public interface ElasticStudentRepository extends ElasticsearchRepository<Elasti
 
     @Query("{\"match\": {\"info\": {\"query\": \"?0\"}}}")
     List<ElasticStudent> findAllStudents(String info);
+
+    // TODO 16: Pageable 을 구현한 검색 가능
+    Page<ElasticStudent> searchElasticStudentByInfo(String keyword, Pageable pageable);
 
     // TODO 11: 네이밍 메소드 사용
     List<ElasticStudent> findAllByInfoContaining(String keyword);
