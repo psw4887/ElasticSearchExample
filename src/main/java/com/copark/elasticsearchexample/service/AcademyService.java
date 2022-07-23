@@ -2,7 +2,8 @@ package com.copark.elasticsearchexample.service;
 
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
-import org.springframework.data.domain.Pageable;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.json.simple.parser.ParseException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface AcademyService {
 
     void createStudent(StudentRequest studentRequest);
 
-    List<ElasticStudent> retrieveStudents(String info, Pageable pageable);
+    List<ElasticStudent> retrieveStudents(String info) throws ParseException, JsonProcessingException;
 
     List<ElasticStudent> retrieveStudentsInfoContainKeyword(String keyword);
 

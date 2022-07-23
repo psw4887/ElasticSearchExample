@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,11 +42,11 @@ public class TestController {
 
     // TODO 14: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
     @GetMapping
-    public ResponseEntity<List<ElasticStudent>> retrieveStudents(@RequestParam String info) {
+    public ResponseEntity<List<ElasticStudent>> retrieveStudents(@RequestParam String info) throws ParseException, JsonProcessingException {
         return ResponseEntity.status(HttpStatus.OK)
                              .location(URI.create("GET" + DEFAULT_ELASTIC))
                              .contentType(MediaType.APPLICATION_JSON)
-                             .body(academyService.retrieveStudents(info, PageRequest.of(0, 1)));
+                             .body(academyService.retrieveStudents(info));
     }
 
     // TODO 10: Info 에 Keyword 를 포함하는 학생 목록을 응답 객체를 반환하는 Rest Controller 작성
