@@ -23,4 +23,4 @@ elasticsearch:
 logging:
   level:
     root: info
-    org.springframework.data.elasticsearch.client.WIRE: trace
+    org.springframework.data.elasticsearch.client.WIRE: error

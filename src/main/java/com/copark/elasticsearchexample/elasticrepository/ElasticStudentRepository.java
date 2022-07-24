@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 public interface ElasticStudentRepository extends ElasticsearchRepository<ElasticStudent, String> {
 
     // TODO 16: Pageable 을 구현한 검색 가능
-    Page<ElasticStudent> searchElasticStudentByInfo(String keyword, Pageable pageable);
+    Page<ElasticStudent> searchElasticStudentsByInfo(String keyword, Pageable pageable);
 
     // TODO 11: 네이밍 메소드 사용
     List<ElasticStudent> findAllByInfoContaining(String keyword);

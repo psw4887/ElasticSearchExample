@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class StudentRequest {
 
-    private String id;
+    private Long id;
 
     private String name;
 
