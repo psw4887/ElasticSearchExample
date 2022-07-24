@@ -27,15 +27,6 @@ public class ElasticStudent {
     @Column
     private String info;
 
-    // @MultiField(
-    //         mainField = @Field(fielddata = true),
-    //         otherFields = {
-    //                 @InnerField(suffix = "FOR-ENG", type = FieldType.Text),
-    //                 @InnerField(suffix = "FOR-SORT", type = FieldType.Keyword)
-    //         }
-    // )
-    // private String info;
-
     public ElasticStudent(StudentRequest studentRequest) {
         this.id = studentRequest.getId();
         this.name = studentRequest.getName();

@@ -1,5 +1,6 @@
 package com.copark.elasticsearchexample.service;
 
+import com.copark.elasticsearchexample.dto.SearchRequest;
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,7 +13,7 @@ public interface AcademyService {
 
     void createStudent(StudentRequest studentRequest);
 
-    List<ElasticStudent> retrieveStudents(String info) throws ParseException, JsonProcessingException;
+    List<ElasticStudent> retrieveStudents(SearchRequest request) throws ParseException, JsonProcessingException;
 
     List<ElasticStudent> retrieveStudentsInfoContainKeyword(String keyword);
 

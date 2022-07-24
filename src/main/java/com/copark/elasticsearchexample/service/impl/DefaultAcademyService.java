@@ -1,6 +1,7 @@
 package com.copark.elasticsearchexample.service.impl;
 
 import com.copark.elasticsearchexample.adapter.AcademyAdapter;
+import com.copark.elasticsearchexample.dto.SearchRequest;
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.elasticrepository.ElasticStudentRepository;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
@@ -39,17 +40,10 @@ public class DefaultAcademyService implements AcademyService {
 
     // TODO 13: 직접 ElasticSearch Server 에 요청을 보낸 후 받은 데이터를 파싱하는 서비스 생성
     @Override
-    public List<ElasticStudent> retrieveStudents(String info) throws ParseException, JsonProcessingException {
-        List<ElasticStudent> list = new ArrayList<>();
-        JSONArray hitBody = getHitBody(academyAdapter.searchTest());
+    public List<ElasticStudent> retrieveStudents(SearchRequest request)
+            throws ParseException, JsonProcessingException {
 
-        for (Object data : hitBody) {
-            JSONObject source = (JSONObject) data;
-            JSONObject body = (JSONObject) source.get("_source");
-            list.add(new ElasticStudent(objectMapper.readValue(body.toJSONString(), StudentRequest.class)));
-        }
-
-        return list;
+        return academyAdapter.searchTest(request);
     }
 
     @Override
@@ -68,13 +62,6 @@ public class DefaultAcademyService implements AcademyService {
         ElasticStudent elasticStudent =
                 elasticRepository.findById(studentId).orElseThrow(RuntimeException::new);
         elasticRepository.delete(elasticStudent);
-    }
-
-    private JSONArray getHitBody(String response) throws ParseException {
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
-        JSONObject hits = (JSONObject) jsonObject.get("hits");
-        return (JSONArray) hits.get("hits");
     }
 
 }
