@@ -52,4 +52,44 @@ public class ConvertToEnglishUtil {
                 "T", "d", "w", "W", "c", "z", "x", "v", "g"};
     }
 
+    public void combineWord(StringBuilder resultEng, char chars) {
+        if (chars <= 11172) {
+            /* A-1. 초/중/종성 분리 */
+            this.wordSeparation(resultEng, chars);
+            /* B. 한글이 아니거나 자음만 있을경우 */
+        } else {
+            /* 알파벳으로 */
+            this.convertToAlphabet(resultEng, chars);
+        }
+    }
+
+    private void wordSeparation(final StringBuilder resultEng, final char chars) {
+        int chosung = chars / (21 * 28);
+        int jungsung = chars % (21 * 28) / 28;
+        int jongsung = chars % (21 * 28) % 28;
+
+        /* 알파벳으로 */
+        resultEng.append(this.arrChoSungEng[chosung])
+                 .append(this.arrJungSungEng[jungsung]);
+        if (jongsung != 0x0000) {
+            /* A-3. 종성이 존재할경우 result 에 담는다 */
+            resultEng.append(this.arrJongSungEng[jongsung]);
+        }
+    }
+
+    private void convertToAlphabet(StringBuilder resultEng, char chars) {
+        if (chars >= 34097 && chars <= 34126) {
+            /* 단일자음인 경우 */
+            int jaum = (chars - 34097);
+            resultEng.append(this.arrSingleJaumEng[jaum]);
+        } else if (chars >= 34127 && chars <= 34147) {
+            /* 단일모음인 경우 */
+            int moum = (chars - 34127);
+            resultEng.append(this.arrJungSungEng[moum]);
+        } else {
+            /* 알파벳인 경우 */
+            resultEng.append(((char) (chars + 0xAC00)));
+        }
+    }
+
 }
