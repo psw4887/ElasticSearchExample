@@ -1,6 +1,5 @@
 package com.copark.elasticsearchexample.util.subutil;
 
-import com.copark.elasticsearchexample.util.Converter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,14 +1,11 @@
 package com.copark.elasticsearchexample.util.subutil;
 
-import lombok.Getter;
-
 /**
  * 알파벳으로 변환
  * 박세완 -> qkrtpdhks, 천재 -> cjswo
  *
  * @version 1.0.0
  */
-@Getter
 public class ConvertToEnglishUtil {
 
     /**
