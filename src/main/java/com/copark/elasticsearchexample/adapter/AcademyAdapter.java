@@ -3,6 +3,7 @@ package com.copark.elasticsearchexample.adapter;
 import com.copark.elasticsearchexample.dto.SearchRequest;
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
+import com.copark.elasticsearchexample.util.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -33,13 +34,18 @@ public class AcademyAdapter {
     private static final String DEFAULT_STUDENT = "/students/_doc";
 
     // TODO 12: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
-    public List<ElasticStudent> searchTest(SearchRequest request) throws ParseException, JsonProcessingException {
-        HttpEntity<String> requestEntity = new HttpEntity<>(buildKeywordRequestBody(request), this.buildHeaders());
+    public List<ElasticStudent> searchTest(SearchRequest request)
+            throws ParseException, JsonProcessingException {
+
+        Converter cv = new Converter();
+        HttpEntity<String> requestEntity = new HttpEntity<>(
+                buildKeywordRequestBody(request, cv.converter(request.getRequest())),
+                this.buildHeaders());
 
         return parsingResponseBody(doRequest(requestEntity).getBody());
     }
 
-    private String buildKeywordRequestBody(final SearchRequest request) {
+    private String buildKeywordRequestBody(final SearchRequest request, final String typo) {
         return "{\n" +
                 "    \"sort\": [\n" +
                 "        {\n" +
@@ -62,8 +68,18 @@ public class AcademyAdapter {
                 "                    }\n" +
                 "                },\n" +
                 "                    {\n" +
+                "                    \"match\": {\n" +
+                "                        \"info\": \"" + typo + "\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                    {\n" +
                 "                    \"match_phrase\": {\n" +
                 "                        \"info.forEng\": \"" + request.getRequest() + "\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                    {\n" +
+                "                    \"match_phrase\": {\n" +
+                "                        \"info.forEng\": \"" + typo + "\"\n" +
                 "                    }\n" +
                 "                }\n" +
                 "            ]\n" +
@@ -90,7 +106,8 @@ public class AcademyAdapter {
         for (Object data : hitBody) {
             JSONObject source = (JSONObject) data;
             JSONObject body = (JSONObject) source.get("_source");
-            list.add(new ElasticStudent(objectMapper.readValue(body.toJSONString(), StudentRequest.class)));
+            list.add(new ElasticStudent(
+                    objectMapper.readValue(body.toJSONString(), StudentRequest.class)));
         }
 
         return list;
