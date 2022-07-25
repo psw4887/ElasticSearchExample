@@ -45,7 +45,9 @@ public class ConvertToKoreanUtil {
      */
     public int getCode(String type, String word) {
         // 초성
-        String init = "rRseEfaqQtTdwWczxvg";
+        String[] init =
+                { "r", "R", "s", "e", "E", "f", "a", "q", "Q", "t", "T", "d", "w", "W", "c", "z",
+                        "x", "v", "g" };
         // 중성
         String[] mid =
                 { "k", "o", "i", "O", "j", "p", "u", "P", "h", "hk", "ho", "hl", "y", "n", "nj",
@@ -57,9 +59,10 @@ public class ConvertToKoreanUtil {
 
         switch (type) {
             case "chosung":
-                int index = init.indexOf(word);
-                if (index != -1) {
-                    return index * 21 * 28;
+                for (int i = 0; i < init.length; i++) {
+                    if (init[i].equals(word)) {
+                        return i * 21 * 28;
+                    }
                 }
                 break;
             case "jungsung":
