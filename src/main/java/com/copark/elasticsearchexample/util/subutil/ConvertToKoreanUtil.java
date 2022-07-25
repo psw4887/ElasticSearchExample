@@ -1,5 +1,6 @@
 package com.copark.elasticsearchexample.util.subutil;
 
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -59,31 +60,17 @@ public class ConvertToKoreanUtil {
 
         switch (type) {
             case "chosung":
-                for (int i = 0; i < init.length; i++) {
-                    if (init[i].equals(word)) {
-                        return i * 21 * 28;
-                    }
-                }
-                break;
+                return Arrays.asList(init).indexOf(word) * 21 * 28;
             case "jungsung":
-                for (int i = 0; i < mid.length; i++) {
-                    if (mid[i].equals(word)) {
-                        return i * 28;
-                    }
-                }
-                break;
+                return Arrays.asList(mid).indexOf(word) * 28;
             case "jongsung":
-                for (int i = 0; i < fin.length; i++) {
-                    if (fin[i].equals(word)) {
-                        return i + 1;
-                    }
-                }
-                break;
+                return Arrays.asList(fin).indexOf(word) + 1;
             default:
                 log.error("잘못된 타입 입니다");
         }
         return -1;
     }
+
     // 한 자로 된 중성값을 리턴한다
     // 인덱스를 벗어낫다면 -1을 리턴
     public int getSingleMedial(int i, String eng) {
