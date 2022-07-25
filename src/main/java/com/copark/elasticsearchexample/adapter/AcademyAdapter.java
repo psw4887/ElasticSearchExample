@@ -1,7 +1,13 @@
 package com.copark.elasticsearchexample.adapter;
 
+import com.copark.elasticsearchexample.dto.RequestBody;
 import com.copark.elasticsearchexample.dto.SearchRequest;
 import com.copark.elasticsearchexample.dto.StudentRequest;
+import com.copark.elasticsearchexample.dto.bodydata.Id;
+import com.copark.elasticsearchexample.dto.bodydata.MultiMatch;
+import com.copark.elasticsearchexample.dto.bodydata.Query;
+import com.copark.elasticsearchexample.dto.bodydata.Score;
+import com.copark.elasticsearchexample.dto.bodydata.Sort;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.util.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,58 +44,27 @@ public class AcademyAdapter {
             throws ParseException, JsonProcessingException {
 
         Converter cv = new Converter();
-        HttpEntity<String> requestEntity = new HttpEntity<>(
-                buildKeywordRequestBody(request, cv.converter(request.getRequest())),
-                this.buildHeaders());
+        HttpEntity<String> requestEntity =
+                new HttpEntity<>(
+                        objectMapper.writeValueAsString(
+                                this.buildKeywordRequestBody(request, cv.converter(request.getRequest()))),
+                        this.buildHeaders());
+
+        log.error(objectMapper.writeValueAsString(
+                this.buildKeywordRequestBody(request, cv.converter(request.getRequest()))));
 
         return parsingResponseBody(doRequest(requestEntity).getBody());
     }
 
-    private String buildKeywordRequestBody(final SearchRequest request, final String typo) {
-        return "{\n" +
-                "    \"sort\": [\n" +
-                "        {\n" +
-                "            \"_score\": {\n" +
-                "                \"order\": \"desc\"\n" +
-                "            },\n" +
-                "            \"id\": {\n" +
-                "                \"order\": \"asc\"\n" +
-                "            }\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"from\": " + request.getPageRequest().getPageNumber() + ",\n" +
-                "    \"size\": " + request.getPageRequest().getPageSize() + ",\n" +
-                "    \"query\": {\n" +
-                "        \"bool\": {\n" +
-                "            \"should\": [\n" +
-                "                    {\n" +
-                "                    \"match\": {\n" +
-                "                        \"info\": \"" + request.getRequest() + "\"\n" +
-                "                    }\n" +
-                "                },\n" +
-                "                    {\n" +
-                "                    \"match\": {\n" +
-                "                        \"info\": \"" + typo + "\"\n" +
-                "                    }\n" +
-                "                },\n" +
-                "                    {\n" +
-                "                    \"match\": {\n" +
-                "                        \"info.forEng\": \"" + request.getRequest() + "\"\n" +
-                "                    }\n" +
-                "                },\n" +
-                "                    {\n" +
-                "                    \"match\": {\n" +
-                "                        \"info.forEng\": \"" + typo + "\"\n" +
-                "                    }\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+    private RequestBody buildKeywordRequestBody(final SearchRequest request, final String typo) {
+        return RequestBody.builder()
+                          .sort(List.of(new Sort(new Score("desc"), new Id("asc"))))
+                          .from(request.getPageRequest().getPageNumber())
+                          .size(request.getPageRequest().getPageSize())
+                          .query(new Query(new MultiMatch(request.getRequest() + " " + typo,
+                                                          List.of("info", "info.forEng"))))
+                          .build();
     }
-    // private String buildRequest(final SearchRequest request, final String typo) {
-    //
-    // }
 
     private ResponseEntity<String> doRequest(final HttpEntity<String> request) {
         return restTemplate.exchange(elasticIp + DEFAULT_STUDENT + "/_search",
