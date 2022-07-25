@@ -39,7 +39,7 @@ public class AcademyAdapter {
     private final String elasticIp;
     private static final String DEFAULT_STUDENT = "/students/_doc";
 
-    // TODO 12: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
+    // TODO 14: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
     public List<ElasticStudent> searchTest(SearchRequest request)
             throws ParseException, JsonProcessingException {
 
@@ -56,6 +56,7 @@ public class AcademyAdapter {
         return parsingResponseBody(doRequest(requestEntity).getBody());
     }
 
+    // TODO 15: 요청 객체 생성
     private RequestBody buildKeywordRequestBody(final SearchRequest request, final String typo) {
         return RequestBody.builder()
                           .sort(List.of(new Sort(new Score("desc"), new Id("asc"))))
@@ -66,6 +67,7 @@ public class AcademyAdapter {
                           .build();
     }
 
+    // TODO 16: 요청
     private ResponseEntity<String> doRequest(final HttpEntity<String> request) {
         return restTemplate.exchange(elasticIp + DEFAULT_STUDENT + "/_search",
                                      HttpMethod.POST,
@@ -73,6 +75,7 @@ public class AcademyAdapter {
                                      String.class);
     }
 
+    // TODO 17: 응답 Body 분석 및 HitsBody 가져오기
     private List<ElasticStudent> parsingResponseBody(final String response)
             throws ParseException, JsonProcessingException {
 

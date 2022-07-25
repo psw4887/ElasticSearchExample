@@ -8,20 +8,16 @@ import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.service.AcademyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-// TODO 8: ElasticRepository 과 요청할 RestTemplate 를 받는 Service 구현
+// TODO 6: ElasticRepository 과 요청할 RestTemplate 를 받는 Service 구현
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -32,6 +28,7 @@ public class DefaultAcademyService implements AcademyService {
     private final ObjectMapper objectMapper;
     private final AcademyAdapter academyAdapter;
 
+    // TODO 8: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
     @Transactional
     @Override
     public void createStudent(StudentRequest studentRequest) {
@@ -53,7 +50,10 @@ public class DefaultAcademyService implements AcademyService {
 
     @Override
     public List<ElasticStudent> namingMethodTest(String keyword) {
-        return elasticRepository.searchElasticStudentsByInfo(keyword, PageRequest.of(1, 2, Sort.by(Sort.Direction.DESC, "info.forSort"))).getContent();
+        return elasticRepository.searchElasticStudentsByInfo(keyword, PageRequest.of(1, 2,
+                                                                                     Sort.by(Sort.Direction.DESC,
+                                                                                             "info.forSort")))
+                                .getContent();
     }
 
     @Transactional

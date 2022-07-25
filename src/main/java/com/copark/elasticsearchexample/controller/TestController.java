@@ -32,7 +32,7 @@ public class TestController {
 
     private static final String DEFAULT_ELASTIC = "/elastic/students";
 
-    // TODO 9: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
+    // TODO 7: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성 Rest Controller 생성
     @PutMapping("/create")
     public ResponseEntity<StudentRequest> createStudent(@RequestBody StudentRequest studentRequest) {
         academyService.createStudent(studentRequest);
@@ -43,7 +43,7 @@ public class TestController {
                              .body(studentRequest);
     }
 
-    // TODO 14: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
+    // TODO 12: 직접 ElasticSearch Server 에 요청 보내기위한 메소드를 실행 할 Rest Controller 생성
     @GetMapping
     public ResponseEntity<List<ElasticStudent>> retrieveStudents(@RequestParam String keyword,
                                                                  Pageable pageable)

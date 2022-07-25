@@ -1,7 +1,5 @@
 package com.copark.elasticsearchexample.entity.elastic;
 
-// TODO 6: ElasticSearch Server 에 담을 객체 생성
-
 import com.copark.elasticsearchexample.dto.StudentRequest;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+// TODO 4: ElasticSearch Server 에 담을 객체 생성
 @Document(indexName = "students")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
