@@ -73,12 +73,12 @@ public class AcademyAdapter {
                 "                    }\n" +
                 "                },\n" +
                 "                    {\n" +
-                "                    \"match_phrase\": {\n" +
+                "                    \"match\": {\n" +
                 "                        \"info.forEng\": \"" + request.getRequest() + "\"\n" +
                 "                    }\n" +
                 "                },\n" +
                 "                    {\n" +
-                "                    \"match_phrase\": {\n" +
+                "                    \"match\": {\n" +
                 "                        \"info.forEng\": \"" + typo + "\"\n" +
                 "                    }\n" +
                 "                }\n" +
@@ -87,6 +87,9 @@ public class AcademyAdapter {
                 "    }\n" +
                 "}";
     }
+    // private String buildRequest(final SearchRequest request, final String typo) {
+    //
+    // }
 
     private ResponseEntity<String> doRequest(final HttpEntity<String> request) {
         return restTemplate.exchange(elasticIp + DEFAULT_STUDENT + "/_search",
