@@ -37,7 +37,7 @@ public class AcademyAdapter {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final String elasticIp;
-    private static final String DEFAULT_STUDENT = "/students/_doc";
+    private static final String DEFAULT_STUDENT = "/students/_search";
 
     // TODO 14: 직접 ElasticSearch Server 에 요청을 보내고 받은 Response 를 String 으로 반환
     public List<ElasticStudent> searchTest(SearchRequest request)
@@ -69,7 +69,7 @@ public class AcademyAdapter {
 
     // TODO 16: 요청
     private ResponseEntity<String> doRequest(final HttpEntity<String> request) {
-        return restTemplate.exchange(elasticIp + DEFAULT_STUDENT + "/_search",
+        return restTemplate.exchange(elasticIp + DEFAULT_STUDENT,
                                      HttpMethod.POST,
                                      request,
                                      String.class);
