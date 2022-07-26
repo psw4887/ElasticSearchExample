@@ -1,29 +1,27 @@
 package com.copark.elasticsearchexample.entity.elastic;
 
 import com.copark.elasticsearchexample.dto.StudentRequest;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 // TODO 4: ElasticSearch Server 에 담을 객체 생성
 @Document(indexName = "students")
-@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ElasticStudent {
 
     @Id
-    @Column
+    @Field
     private Long id;
 
-    @Column
+    @Field
     private String name;
 
-    @Column
+    @Field
     private String info;
 
     public ElasticStudent(StudentRequest studentRequest) {
