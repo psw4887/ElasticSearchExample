@@ -50,7 +50,7 @@ public class AcademyAdapter {
                 new HttpEntity<>(objectMapper.writeValueAsString(new RequestBody<>(map, request)),
                         this.buildHeaders());
 
-        log.error(objectMapper.writeValueAsString(new RequestBody<>(map, request)));
+        log.trace(objectMapper.writeValueAsString(new RequestBody<>(map, request)));
 
         return parsingResponseBody(doRequest(requestEntity).getBody());
     }

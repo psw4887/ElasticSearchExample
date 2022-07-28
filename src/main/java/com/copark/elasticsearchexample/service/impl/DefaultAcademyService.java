@@ -24,8 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class DefaultAcademyService implements AcademyService {
 
     private final ElasticStudentRepository elasticRepository;
-
-    private final ObjectMapper objectMapper;
     private final AcademyAdapter academyAdapter;
 
     // TODO 8: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
