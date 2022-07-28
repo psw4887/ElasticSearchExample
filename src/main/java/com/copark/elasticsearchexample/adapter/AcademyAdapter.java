@@ -3,17 +3,14 @@ package com.copark.elasticsearchexample.adapter;
 import com.copark.elasticsearchexample.dto.RequestBody;
 import com.copark.elasticsearchexample.dto.SearchRequest;
 import com.copark.elasticsearchexample.dto.StudentRequest;
-import com.copark.elasticsearchexample.dto.bodydata.Id;
-import com.copark.elasticsearchexample.dto.bodydata.MultiMatch;
-import com.copark.elasticsearchexample.dto.bodydata.Query;
-import com.copark.elasticsearchexample.dto.bodydata.Score;
-import com.copark.elasticsearchexample.dto.bodydata.Sort;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.util.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -44,30 +41,21 @@ public class AcademyAdapter {
             throws ParseException, JsonProcessingException {
 
         Converter cv = new Converter();
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("_score", "desc");
+        map.put("id", "asc");
+        request.setRequest(request.getRequest() + " " + cv.converter(request.getRequest()));
+
         HttpEntity<String> requestEntity =
-                new HttpEntity<>(
-                        objectMapper.writeValueAsString(
-                                this.buildKeywordRequestBody(request, cv.converter(request.getRequest()))),
+                new HttpEntity<>(objectMapper.writeValueAsString(new RequestBody<>(map, request)),
                         this.buildHeaders());
 
-        log.error(objectMapper.writeValueAsString(
-                this.buildKeywordRequestBody(request, cv.converter(request.getRequest()))));
+        log.trace(objectMapper.writeValueAsString(new RequestBody<>(map, request)));
 
         return parsingResponseBody(doRequest(requestEntity).getBody());
     }
 
-    // TODO 15: 요청 객체 생성
-    private RequestBody buildKeywordRequestBody(final SearchRequest request, final String typo) {
-        return RequestBody.builder()
-                          .sort(List.of(new Sort(new Score("desc"), new Id("asc"))))
-                          .from(request.getPageRequest().getPageNumber())
-                          .size(request.getPageRequest().getPageSize())
-                          .query(new Query(new MultiMatch(request.getRequest() + " " + typo,
-                                                          List.of("info", "info.forEng"))))
-                          .build();
-    }
-
-    // TODO 16: 요청
+    // TODO 15: 요청
     private ResponseEntity<String> doRequest(final HttpEntity<String> request) {
         return restTemplate.exchange(elasticIp + DEFAULT_STUDENT,
                                      HttpMethod.POST,
@@ -75,7 +63,7 @@ public class AcademyAdapter {
                                      String.class);
     }
 
-    // TODO 17: 응답 Body 분석 및 HitsBody 가져오기
+    // TODO 16: 응답 Body 분석 및 HitsBody 가져오기
     private List<ElasticStudent> parsingResponseBody(final String response)
             throws ParseException, JsonProcessingException {
 

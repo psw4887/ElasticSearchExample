@@ -7,7 +7,6 @@ import com.copark.elasticsearchexample.elasticrepository.ElasticStudentRepositor
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.service.AcademyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class DefaultAcademyService implements AcademyService {
 
     private final ElasticStudentRepository elasticRepository;
-
-    private final ObjectMapper objectMapper;
     private final AcademyAdapter academyAdapter;
 
     // TODO 8: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
