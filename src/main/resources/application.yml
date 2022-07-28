@@ -13,7 +13,7 @@ spring:
 
 # TODO 1-1: yml 파일에 엘라스틱 서치 서버 연동 설정
   elasticsearch:
-    uris: 133.186.153.181:9200
+    uris: 127.0.0.1:9200
     connection-timeout: 30
 
 server:
