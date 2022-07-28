@@ -1,15 +1,17 @@
 package com.copark.elasticsearchexample.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
+@Setter
 public class SearchRequest {
 
-    private final String request;
+    private String request;
 
-    private final PageRequest pageRequest;
+    private PageRequest pageRequest;
 
 }
