@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 // TODO 2: ElasticSearch Repository 와 충돌 회피를 위한 Jpa Repository 패키지 위치 설정
-// TODO 3: ElasticSearch Server 요청을 위한 RestTemplate 빈 등록 및 서버 IP 설정
 @EnableJpaRepositories(excludeFilters = @ComponentScan.Filter(
         type = FilterType.ASSIGNABLE_TYPE,
         classes = { EsRepositoryMarker.class }),
@@ -26,6 +25,7 @@ import java.time.Duration;
 @Configuration
 public class WebConfig {
 
+    // TODO 3: ElasticSearch Server 요청을 위한 RestTemplate 빈 등록 및 서버 IP 설정
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder

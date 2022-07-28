@@ -2,7 +2,7 @@ package com.copark.elasticsearchexample.service.impl;
 
 import com.copark.elasticsearchexample.adapter.AcademyAdapter;
 import com.copark.elasticsearchexample.dto.SearchRequest;
-import com.copark.elasticsearchexample.dto.StudentRequest;
+import com.copark.elasticsearchexample.dto.StudentDto;
 import com.copark.elasticsearchexample.elasticrepository.ElasticStudentRepository;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.service.AcademyService;
@@ -28,8 +28,8 @@ public class DefaultAcademyService implements AcademyService {
     // TODO 8: 요청 객체를 받아 ElasticSearch Server 에 ElasticStudent 데이터 생성
     @Transactional
     @Override
-    public void createStudent(StudentRequest studentRequest) {
-        elasticRepository.save(new ElasticStudent(studentRequest));
+    public void createStudent(StudentDto studentDto) {
+        elasticRepository.save(new ElasticStudent(studentDto));
     }
 
     // TODO 13: 직접 ElasticSearch Server 에 요청을 보낸 후 받은 데이터를 파싱하는 서비스 생성

@@ -1,6 +1,6 @@
 package com.copark.elasticsearchexample.entity.elastic;
 
-import com.copark.elasticsearchexample.dto.StudentRequest;
+import com.copark.elasticsearchexample.dto.StudentDto;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
-// TODO 4: ElasticSearch Server 에 담을 객체 생성
+// TODO 4: ElasticSearch Server 에 담을 Document 생성
 @Document(indexName = "students")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -24,10 +24,10 @@ public class ElasticStudent {
     @Field
     private String info;
 
-    public ElasticStudent(StudentRequest studentRequest) {
-        this.id = studentRequest.getId();
-        this.name = studentRequest.getName();
-        this.info = studentRequest.getInfo();
+    public ElasticStudent(StudentDto studentDto) {
+        this.id = studentDto.getId();
+        this.name = studentDto.getName();
+        this.info = studentDto.getInfo();
     }
 
 }

@@ -2,7 +2,7 @@ package com.copark.elasticsearchexample.adapter;
 
 import com.copark.elasticsearchexample.dto.RequestBody;
 import com.copark.elasticsearchexample.dto.SearchRequest;
-import com.copark.elasticsearchexample.dto.StudentRequest;
+import com.copark.elasticsearchexample.dto.StudentDto;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.copark.elasticsearchexample.util.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -76,7 +76,7 @@ public class AcademyAdapter {
             JSONObject source = (JSONObject) data;
             JSONObject body = (JSONObject) source.get("_source");
             list.add(new ElasticStudent(
-                    objectMapper.readValue(body.toJSONString(), StudentRequest.class)));
+                    objectMapper.readValue(body.toJSONString(), StudentDto.class)));
         }
 
         return list;

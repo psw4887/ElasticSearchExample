@@ -1,17 +1,16 @@
 package com.copark.elasticsearchexample.service;
 
 import com.copark.elasticsearchexample.dto.SearchRequest;
-import com.copark.elasticsearchexample.dto.StudentRequest;
+import com.copark.elasticsearchexample.dto.StudentDto;
 import com.copark.elasticsearchexample.entity.elastic.ElasticStudent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.simple.parser.ParseException;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface AcademyService {
 
-    void createStudent(StudentRequest studentRequest);
+    void createStudent(StudentDto studentDto);
 
     List<ElasticStudent> retrieveStudents(SearchRequest request) throws ParseException, JsonProcessingException;
 
