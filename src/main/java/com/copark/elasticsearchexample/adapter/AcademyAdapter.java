@@ -30,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class AcademyAdapter {
 
+    // FIXME: 보안 적용
     private final JSONParser jsonParser = new JSONParser();
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
