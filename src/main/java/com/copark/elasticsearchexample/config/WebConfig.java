@@ -36,7 +36,7 @@ public class WebConfig {
 
     @Bean
     public String elasticIp(@Value("${spring.elasticsearch.uris}") String ip) {
-        return "http://" + ip;
+        return "http://elastic:123456@" + ip;
     }
 
 }
