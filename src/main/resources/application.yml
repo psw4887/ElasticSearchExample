@@ -15,6 +15,8 @@ spring:
   elasticsearch:
     uris: 127.0.0.1:9200
     connection-timeout: 30
+    password: 123456
+    username: elastic
 
 server:
   port: 1090
